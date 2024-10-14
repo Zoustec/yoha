@@ -6,26 +6,18 @@ const path = require('path');
 
 module.exports = (env) => {
   const config = {
-    mode: 'development',
-    devtool: 'inline-source-map',
-    devServer: {
-      open: true,
-      headers: {
-        // These two headers are requried for cross origin isolation.
-        'Cross-Origin-Opener-Policy': 'same-origin',
-        'Cross-Origin-Embedder-Policy': 'require-corp'
-      },
-      https: true,
-      host: '0.0.0.0',
-      port: 8091,
-      historyApiFallback: {
-        disableDotRule: true,
-      },
-      watchFiles: ['src/**/*'],
-    },
+    mode: 'production',
+    //devtool: 'inline-source-map',
     output: {
       path: path.resolve(__dirname, 'dist'),
       clean: true,
+      //libraryTarget: "this",
+      library: {
+        type: 'var',
+        name: 'yoha',
+      },
+      chunkFormat: 'commonjs',
+      scriptType: 'text/javascript',
     },
     resolve: {
       extensions: ['.js'],
@@ -45,8 +37,11 @@ module.exports = (env) => {
     entry: {
       example: {
         import: './src/entry.js',
-        filename: 'example.js',
+        filename: 'yoha.js',
       },
+    },
+    optimization: {
+      minimize: true,
     }
   };
 
